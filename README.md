@@ -3,7 +3,7 @@
 
 ### Paper
 
-TBD
+* [arXiv link](http://arxiv.org/abs/2409.16850)
 
 ### An Introduction Video (3 minutes)
 
