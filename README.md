@@ -77,7 +77,7 @@ $ pip install -r requirements.txt
 ### TODO
 
 * [ ] release source code
-    * [ x ] release datasets module
+    * [x] release datasets module
     * [ ] release models module
     * [ ] release train/fine-tune/evaluation/visualize scripts
 * [ ] release pretraining weight
