@@ -29,27 +29,27 @@ $ pip install -r requirements.txt
 
 * unittest
     ``` bash
-    $ cd <this repository>/unittest
+    $ cd <this repository>/src/unittest
     $ python -m unittest
     ```
 
 * training
     ```bash
     # modify the configuration in scripts/configs/train.yml
-    $ python <this repository>/scripts/train.py \
-        <this repository>/scripts/configs/train.yml
+    $ python <this repository>/src/scripts/train.py \
+        <this repository>/src/scripts/configs/train.yml
     ```
 
 * fine-tune
     ```bash
     # modify the configuration in scripts/configs/fine_tune.yml
-    $ python <this repository>/scripts/fine_tune.py \
-        <this repository>/scripts/configs/fine_tune.yml
+    $ python <this repository>/src/scripts/fine_tune.py \
+        <this repository>/src/scripts/configs/fine_tune.yml
     ```
 
 * evaluation
     ```bash
-    $ python <this repository>/scripts/evaluate.py \
+    $ python <this repository>/src/scripts/evaluate.py \
         <checkpoint directory>/<name>.pth
     ```
 
@@ -76,9 +76,9 @@ $ pip install -r requirements.txt
 
 ### TODO
 
-* [ ] release source code
+* [x] release source code
     * [x] release datasets module
-    * [ ] release models module
-    * [ ] release train/fine-tune/evaluation/visualize scripts
+    * [x] release models module
+    * [x] release train/fine-tune/evaluation/visualize scripts
 * [ ] release pretraining weight
 * [ ] examples of inference on new scenes
