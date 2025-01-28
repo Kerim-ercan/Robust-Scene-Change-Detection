@@ -1,5 +1,5 @@
 wandb
-numpy
+numpy<2.0.0
 pyyaml
 Pillow
 matplotlib
