@@ -7,7 +7,7 @@ from torchvision import transforms as tvf
 import evaluation
 
 # local module
-from py_utils import utils, utils_torch, utils_img
+from py_utils.src import utils, utils_torch, utils_img
 
 
 def translate_image(tx, ty):
