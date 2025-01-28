@@ -72,7 +72,27 @@ $ pip install -r requirements.txt
 
 ### Pretrained Weight
 
-* TBD
+* Train on VL-CMU-CD
+
+| name             | train on VL-CMU-CD    | train on diff VL-CMU-CD   | fine-tune on PSCD   |
+| ---------------- | :-------------------: | :-----------------------: | :-----------------: |
+| ours (DinoV2)    | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.CMU.pth) | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.Diff-CMU.pth) | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.PSCD.pth) |
+| ours (Resnet-18) | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/resnet18.2CrossAttn.CMU.pth) | / | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/resnet18.2CrossAttn.PSCD.pth) |
+| C-3PO            | [resnet18_id_4_deeplabv3_VL_CMU_CD](https://github.com/DoctorKey/C-3PO) |                     |                     |
+| DR-TANet         |                     |                     |                     |
+| CDNet            |                     |                     |                     |
+| TransCD          | [VL-CMU-CD -> Res-SViT_E1_D1_16.pth](https://github.com/wangle53/TransCD) |                     |                     |
+
+* backbone v.s. comparator
+
+| backbone  | comparator         | train on VL-CMU-CD |
+| --------- | ------------------ | ------------------ |
+| DinoV2    | Co-Attention       | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.CoAttn.CMU.pth) |
+| DinoV2    | Temporal Attention | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.TemporalAttn.CMU.pth) |
+| DinoV2    | MTF                | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.MTF.CMU.pth) |
+| DinoV2    | 1 CrossAttn        | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.1CrossAttn.CMU.pth) |
+| DinoV2    | 2 CrossAttn        | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.CMU.pth) |
+| Resnet-18 | 2 CrossAttn        | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/resnet18.2CrossAttn.CMU.pth) |
 
 ### TODO
 
@@ -80,5 +100,5 @@ $ pip install -r requirements.txt
     * [x] release datasets module
     * [x] release models module
     * [x] release train/fine-tune/evaluation/visualize scripts
-* [ ] release pretraining weight
+* [x] release pretraining weight
 * [ ] examples of inference on new scenes
