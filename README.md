@@ -13,6 +13,12 @@
 ### Installation
 
 ```bash
+# clone main repo and corresponding submodule
+$ git clone https://github.com/ChadLin9596/Robust-Scene-Change-Detection
+$ cd <this repository>
+$ git submodule init
+$ git submodule update
+
 # create a Python 3.9.6 virtual environment
 $ source <directory of virtual environment>/bin/activate
 $ cd <this repository>
@@ -76,23 +82,23 @@ $ pip install -r requirements.txt
 
 | name             | train on VL-CMU-CD    | train on diff VL-CMU-CD   | fine-tune on PSCD   |
 | ---------------- | :-------------------: | :-----------------------: | :-----------------: |
-| ours (DinoV2)    | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.CMU.pth) | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.Diff-CMU.pth) | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.PSCD.pth) |
-| ours (Resnet-18) | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/resnet18.2CrossAttn.CMU.pth) | / | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/resnet18.2CrossAttn.PSCD.pth) |
-| C-3PO            | [resnet18_id_4_deeplabv3_VL_CMU_CD](https://github.com/DoctorKey/C-3PO) |                     |                     |
-| DR-TANet         |                     |                     |                     |
-| CDNet            |                     |                     |                     |
-| TransCD          | [VL-CMU-CD -> Res-SViT_E1_D1_16.pth](https://github.com/wangle53/TransCD) |                     |                     |
+| ours (DinoV2)    | [dinov2.2CrossAttn.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.CMU.pth) | [dinov2.2CrossAttn.Diff-CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.Diff-CMU.pth) | [dinov2.2CrossAttn.PSCD](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.PSCD.pth) |
+| ours (Resnet-18) | [resnet18.2CrossAttn.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/resnet18.2CrossAttn.CMU.pth) | / | [resnet18.2CrossAttn.PSCD](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/resnet18.2CrossAttn.PSCD.pth) |
+| [C-3PO](https://github.com/DoctorKey/C-3PO) | [resnet18_id_4_deeplabv3_VL_CMU_CD](https://github.com/DoctorKey/C-3PO) | [baseline.c3po.Diff-CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/baseline.c3po.Diff-CMU.pth) | [baseline.c3po.PSCD](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/baseline.c3po.PSCD.pth) |
+| [DR-TANet](https://github.com/Herrccc/DR-TANet) | [baseline.drtanet.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/baseline.drtanet.CMU.pth) | [baseline.drtanet.Diff-CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/baseline.drtanet.Diff-CMU.pth) | [baseline.drtanet.PSCD](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/baseline.drtanet.PSCD.pth) |
+| [CDNet](https://github.com/kensakurada/sscdnet) | [baseline.cdnet.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/baseline.cdnet.CMU.pth) | [baseline.cdnet.Diff-CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/baseline.cdnet.Diff-CMU.pth) | / |
+| [TransCD](https://github.com/wangle53/TransCD) | [VL-CMU-CD -> Res-SViT_E1_D1_16.pth](https://github.com/wangle53/TransCD) | / | / |
 
 * backbone v.s. comparator
 
 | backbone  | comparator         | train on VL-CMU-CD |
 | --------- | ------------------ | ------------------ |
-| DinoV2    | Co-Attention       | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.CoAttn.CMU.pth) |
-| DinoV2    | Temporal Attention | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.TemporalAttn.CMU.pth) |
-| DinoV2    | MTF                | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.MTF.CMU.pth) |
-| DinoV2    | 1 CrossAttn        | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.1CrossAttn.CMU.pth) |
-| DinoV2    | 2 CrossAttn        | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.CMU.pth) |
-| Resnet-18 | 2 CrossAttn        | [weight](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/resnet18.2CrossAttn.CMU.pth) |
+| DinoV2    | Co-Attention       | [dinov2.CoAttn.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.CoAttn.CMU.pth) |
+| DinoV2    | Temporal Attention | [dinov2.TemporalAttn.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.TemporalAttn.CMU.pth) |
+| DinoV2    | MTF                | [dinov2.MTF.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.MTF.CMU.pth) |
+| DinoV2    | 1 CrossAttn        | [dinov2.1CrossAttn.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.1CrossAttn.CMU.pth) |
+| DinoV2    | 2 CrossAttn        | [dinov2.2CrossAttn.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.CMU.pth) |
+| Resnet-18 | 2 CrossAttn        | [resnet18.2CrossAttn.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/resnet18.2CrossAttn.CMU.pth) |
 
 ### TODO
 
