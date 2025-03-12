@@ -107,4 +107,6 @@ $ pip install -r requirements.txt
     * [x] release models module
     * [x] release train/fine-tune/evaluation/visualize scripts
 * [x] release pretraining weight
-* [ ] examples of inference on new scenes
+* [x] examples of inference on new scenes
+* [ ] support Hugging Face (Q3 2025 or earlier...)
+* [ ] refactor to `mini` or similar branch (like C3PO)
