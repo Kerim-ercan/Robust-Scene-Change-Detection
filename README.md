@@ -14,6 +14,9 @@
 
 ```bash
 # clone main repo and corresponding submodule
+$ git clone https://github.com/ChadLin9596/Robust-Scene-Change-Detection --recursive
+
+# or
 $ git clone https://github.com/ChadLin9596/Robust-Scene-Change-Detection
 $ cd <this repository>
 $ git submodule init
@@ -23,6 +26,11 @@ $ git submodule update
 $ source <directory of virtual environment>/bin/activate
 $ cd <this repository>
 $ pip install -r requirements.txt
+
+# install
+$ pip install -e thirdparties/py_utils
+$ pip install -e .
+
 ```
 
 ### Datasets

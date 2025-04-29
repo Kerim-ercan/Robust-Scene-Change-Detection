@@ -4,10 +4,10 @@ import torchvision.transforms.functional as tvff
 from torch.nn import functional as F
 from torchvision import transforms as tvf
 
-import evaluation
+from . import evaluation
 
 # local module
-from py_utils.src import utils, utils_torch, utils_img
+from py_utils import utils, utils_torch, utils_img
 
 
 def translate_image(tx, ty):

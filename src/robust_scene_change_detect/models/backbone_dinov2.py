@@ -9,8 +9,8 @@ from torch.nn import functional as F
 # ignore warning showing from dino
 warnings.filterwarnings("ignore")
 
-from py_utils.src.utils import is_connect_to_network
-from py_utils.src.utils_torch import (
+from py_utils.utils import is_connect_to_network
+from py_utils.utils_torch import (
     freeze_model,
     is_all_frozen,
     is_any_frozen,

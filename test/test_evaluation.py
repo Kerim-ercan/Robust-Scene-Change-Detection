@@ -1,14 +1,8 @@
-import os
-import sys
-
-os.chdir(os.path.split(os.path.realpath(__file__))[0])
-sys.path.append("..")
-
 import unittest
 
 import numpy as np
 
-import evaluation
+import robust_scene_change_detect.evaluation as evaluation
 
 
 class TestEvaluation(unittest.TestCase):

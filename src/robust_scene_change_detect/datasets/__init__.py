@@ -1,14 +1,19 @@
 import os
 
+import torch
 import torch.utils.data
-
-# local modules
-import datasets.transform
-import torch_utils
+import torchvision.transforms as tvf
 
 # local dataset
 from .pscd import PSCD, CroppedPSCD, DiffViewPSCD
 from .vl_cmu_cd import VL_CMU_CD, Diff_VL_CMU_CD
+
+# local modules
+import robust_scene_change_detect.torch_utils as torch_utils
+
+################
+# DATA FACTORY #
+################
 
 # global variable for accessing path of datasets
 _data_factory = {
@@ -28,7 +33,7 @@ def _load_factory():
     global _path_factory
 
     path, _ = os.path.split(__file__)
-    path = os.path.join(path, "data_factory")
+    path = os.path.join(path, "..", "..", "..", "data_factory")
 
     with open(path, "r") as fd:
         datas = fd.read()
@@ -80,14 +85,74 @@ def get_dataset(name, root=None, **kwargs):
     return loader(root=root, **kwargs)
 
 
+#############
+# Transform #
+#############
+
+
+def prepare_transform(dataset, mean, std, figsize=None):
+
+    if figsize is None:
+        orig_figsize = dataset.figsize
+        figsize = orig_figsize // 14 * 14  # be compatible with DINOv2
+        figsize = figsize.tolist()
+
+    transform = tvf.Compose(
+        [
+            tvf.ToTensor(),
+            tvf.CenterCrop(figsize),
+            tvf.Normalize(mean=mean, std=std),
+        ]
+    )
+
+    target_transform = tvf.Compose(
+        [
+            tvf.ToTensor(),
+            tvf.CenterCrop(figsize),
+            torch.squeeze,
+        ]
+    )
+
+    return transform, target_transform
+
+
+def prepare_transform_wo_normalization(dataset, figsize=None):
+
+    orig_figsize = dataset.figsize
+    if figsize is None:
+        figsize = orig_figsize // 14 * 14  # be compatible with DINOv2
+        figsize = figsize.tolist()
+
+    transform = tvf.Compose(
+        [
+            tvf.ToTensor(),
+            tvf.CenterCrop(figsize),
+        ]
+    )
+
+    target_transform = tvf.Compose(
+        [
+            tvf.ToTensor(),
+            tvf.CenterCrop(figsize),
+            torch.squeeze,
+        ]
+    )
+
+    return transform, target_transform
+
+
+###########
+# Wrapper #
+###########
+
+
 def wrap_eval_dataset(opts, shuffle=True, figsize=None):
 
     batch_size = opts["batch-size"]
     num_workers = opts["num-workers"]
-    transform_loader = datasets.transform.get_transform_loader("wo_norm")
 
     def wrapper(dataset, **kwargs):
-        transform, target_transform = transform_loader(
+        transform, target_transform = prepare_transform_wo_normalization(
             dataset, figsize=figsize
         )
 
@@ -119,8 +184,6 @@ def get_CMU_training_datasets_aug_diff(**opts):
     hflip_prob = opts["hflip-prob"]
     figsize = opts.get("figsize", None)
 
-    wrapper = torch_utils.CDDataWrapper
-
     trainset_origin = get_dataset("VL_CMU_CD", mode="train")
     trainset_origin_diff = get_dataset(
         "VL_CMU_CD_Diff_View",
@@ -128,8 +191,8 @@ def get_CMU_training_datasets_aug_diff(**opts):
         adjacent_distance=1,
     )
 
-    transform, target_transform = datasets.transform.get_transform(
-        "wo_norm", trainset_origin, figsize=figsize
+    transform, target_transform = prepare_transform_wo_normalization(
+        trainset_origin, figsize=figsize
     )
 
     train_opts = {
@@ -139,6 +202,7 @@ def get_CMU_training_datasets_aug_diff(**opts):
         "hflip_prob": hflip_prob,
     }
 
+    wrapper = torch_utils.CDDataWrapper
     training_sets = wrapper(trainset_origin, **train_opts)
     training_diff_sets = wrapper(trainset_origin_diff, **train_opts)
     training_aug_diff_sets = wrapper(
@@ -176,8 +240,8 @@ def get_CMU_training_datasets(**opts):
 
     trainset_origin = get_dataset("VL_CMU_CD", mode="train")
 
-    transform, target_transform = datasets.transform.get_transform(
-        "wo_norm", trainset_origin, figsize=figsize
+    transform, target_transform = prepare_transform_wo_normalization(
+        trainset_origin, figsize=figsize
     )
 
     train_opts = {
@@ -207,15 +271,15 @@ def get_PSCD_training_datasets(**opts):
 
     wrapper = torch_utils.CDDataWrapper
 
-    trainset_origin = datasets.get_dataset(
+    trainset_origin = get_dataset(
         "PSCD",
         mode="train",
         use_mask_t0=True,
         use_mask_t1=False,
     )
 
-    transform, target_transform = datasets.transform.get_transform(
-        "wo_norm", trainset_origin
+    transform, target_transform = prepare_transform_wo_normalization(
+        trainset_origin
     )
 
     train_opts = {

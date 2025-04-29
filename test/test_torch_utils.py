@@ -1,14 +1,8 @@
-import os
-import sys
-
-os.chdir(os.path.split(os.path.realpath(__file__))[0])
-sys.path.append("..")
-
 import unittest
 
 import torch
 
-import torch_utils
+import robust_scene_change_detect.torch_utils as torch_utils
 
 
 class TestTorchUtils(unittest.TestCase):

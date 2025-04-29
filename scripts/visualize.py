@@ -13,14 +13,14 @@ import argparse
 import torch
 import torch.nn as nn
 
-import datasets
-import evaluation
-import models
+import robust_scene_change_detect.datasets as datasets
+import robust_scene_change_detect.evaluation as evaluation
+import robust_scene_change_detect.models as models
 
-from py_utils.src import data_repo
-from py_utils.src import utils
-from py_utils.src import utils_img
-from py_utils.src import utils_torch
+from py_utils import data_repo
+from py_utils import utils
+from py_utils import utils_img
+from py_utils import utils_torch
 
 
 _device = "cuda"
