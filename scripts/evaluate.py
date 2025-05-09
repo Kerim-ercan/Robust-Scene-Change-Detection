@@ -1,12 +1,6 @@
 import os
-import sys
 
 _pre_cwd = os.path.realpath(os.getcwd())
-
-# this file should place under .../<this repo>/scripts/
-# change working directory to <this repo>
-os.chdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), ".."))
-sys.path.append(".")
 
 import argparse
 import json
@@ -16,12 +10,12 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-import datasets
-import models
-import torch_utils
+import robust_scene_change_detect.datasets as datasets
+import robust_scene_change_detect.models as models
+import robust_scene_change_detect.torch_utils as torch_utils
 
-from py_utils.src import utils
-from py_utils.src import utils_torch
+from py_utils import utils
+from py_utils import utils_torch
 
 _device = "cuda"
 

@@ -1,12 +1,6 @@
 import os
-import sys
 
 _pre_cwd = os.path.realpath(os.getcwd())
-
-# this file should place under .../<this repo>/scripts/
-# change working directory to <this repo>
-os.chdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), ".."))
-sys.path.append(".")
 
 import argparse
 
