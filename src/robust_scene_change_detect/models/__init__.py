@@ -1,3 +1,6 @@
+import torch
+import torch.nn as nn
+
 from .backbone_dinov2 import get_dino
 from .backbone_resnet import ResNet
 from .CD_model import (
@@ -8,6 +11,25 @@ from .CD_model import (
     TemporalAttention,
     ResNet18CrossAttention,
 )
+
+import py_utils.utils_torch as utils_torch
+
+_release_root = "https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/"
+
+_checkpoint_factory = {
+    # main model (Dinov2)
+    "dino_2Cross_CMU": _release_root + "dinov2.2CrossAttn.CMU.pth",
+    "dino_2Cross_DiffCMU": _release_root + "dinov2.2CrossAttn.Diff-CMU.pth",
+    "dino_2Cross_PSCD": _release_root + "dinov2.2CrossAttn.PSCD.pth",
+    # experimental model (ResNet18)
+    "resnet_2Cross_CMU": _release_root + "resnet18.2CrossAttn.CMU.pth",
+    "resnet_2Cross_PSCD": _release_root + "resnet18.2CrossAttn.PSCD.pth",
+    # ablation model
+    "dino_1Cross_CMU": _release_root + "dinov2.1CrossAttn.CMU.pth",
+    "dino_CoAttn_CMU": _release_root + "dinov2.CoAttn.CMU.pth",
+    "dino_TemporalAttn_CMU": _release_root + "dinov2.TemporalAttn.CMU.pth",
+    "dino_MTF_CMU": _release_root + "dinov2.MTF.CMU.pth",
+}
 
 _model_factory = {
     "dino2 + cross_attention": CrossAttention,
@@ -120,3 +142,28 @@ def get_model(**opts):
         raise ValueError(f"no backbone loader for {name}")
 
     return loader(backbone, **kwargs)
+
+
+def get_model_from_pretrained(name):
+    """
+    get model from pretrained
+    """
+
+    if name not in _checkpoint_factory:
+        msg = "'%s' do not support. please check other models.\n" % name
+        msg += ", ".join(_checkpoint_factory.keys())
+        raise RuntimeError(msg)
+
+    # load checkpoint
+    checkpoint = torch.hub.load_state_dict_from_url(
+        _checkpoint_factory[name],
+        map_location="cpu",
+        progress=True,
+        check_hash=True,
+    )
+
+    # get model
+    model = get_model(**checkpoint["args"]["model"])
+    model = nn.DataParallel(model)
+    model = utils_torch.load_grad_required_state(model, checkpoint["model"])
+    return model
