@@ -22,7 +22,7 @@ $ cd <this repository>
 $ git submodule init
 $ git submodule update
 
-# create a Python 3.9.6 virtual environment
+# create a Python 3.9.6 (or other env can run DinoV2) virtual environment
 $ source <directory of virtual environment>/bin/activate
 $ cd <this repository>
 $ pip install -r requirements.txt
@@ -45,6 +45,29 @@ $ pip install -e .
     ``` bash
     $ cd <this repository>/src/unittest
     $ python -m unittest
+    ```
+
+* loading a model and test (please check [inference.ipynb](examples/inference.ipynb))
+    ```python
+    import torch
+    import robust_scene_change_detect.models as models
+
+    B = 1
+    H = 504  # need to be 14 * n
+    W = 504  # need to be 14 * n
+
+    # load model
+    model = models.get_model_from_pretrained("dino_2Cross_CMU")
+    model = model.cuda().eval()
+    model.module.upsample.size = (H, W)
+
+    # load image
+    t0 = torch.rand(B, 3, H, W).cuda()
+    t1 = torch.rand(B, 3, H, W).cuda()
+
+    with torch.no_grad():
+        pred = model(t0, t1)  # B, H, W, 2
+        pred = pred.argmax(dim=-1)  # B, H, W
     ```
 
 * training
@@ -108,6 +131,23 @@ $ pip install -e .
 | DinoV2    | 2 CrossAttn        | [dinov2.2CrossAttn.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/dinov2.2CrossAttn.CMU.pth) |
 | Resnet-18 | 2 CrossAttn        | [resnet18.2CrossAttn.CMU](https://github.com/ChadLin9596/Robust-Scene-Change-Detection/releases/download/v0.0.0/resnet18.2CrossAttn.CMU.pth) |
 
+### Changelogs
+
+##### v0.1.0
+
+* Modularize whole package to `robust_scene_change_detect` (can be installed by `pip install -e`)
+* Remove relative path setting for easier inference
+* Remove evaluation scripts for baselines.
+* Support torch hub loading to automatically download checkpoints
+
+##### V0.0.0
+
+* Release datasets module
+* Release models module
+* Release train/fine-tune/evaluation/visualize scripts
+* Release pretraining weight
+* Examples of inference on new scenes
+
 ### TODO
 
 * [x] release source code
@@ -116,5 +156,6 @@ $ pip install -e .
     * [x] release train/fine-tune/evaluation/visualize scripts
 * [x] release pretraining weight
 * [x] examples of inference on new scenes
+* [x] support torch hub
 * [ ] support Hugging Face (Q3 2025 or earlier...)
-* [ ] refactor to `mini` or similar branch (like C3PO)
+* [x] refactor to `master` and keep baseline scripts into `master-w-baselines` branch (like C3PO)
