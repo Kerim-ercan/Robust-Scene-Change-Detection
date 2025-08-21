@@ -1,0 +1,43 @@
+{
+    "model": {
+        "checkpoints": "/home/divit/projects/models/dinov2.2CrossAttn.Diff-CMU.pth",
+        "target-shp-row": 504,
+        "target-shp-col": 504
+    },
+    "optimizer": {
+        "epochs": 20,
+        "warmup-epoch": 2,
+        "learn-rate": 2e-05,
+        "loss-weight": true,
+        "lr-scheduler": "cosine",
+        "grad-scaler": true
+    },
+    "dataset": {
+        "batch-size": 4,
+        "num-workers": 4,
+        "dataset": "CUSTOM",
+        "hflip-prob": 0.5,
+        "figsize": 224
+    },
+    "evaluation": {
+        "trainset": 5
+    },
+    "wandb": {
+        "project": "custom-change-detection",
+        "name": "custom-dataset-finetune",
+        "output-path": "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/output/2025-08-21.08-38-23",
+        "save-checkpoint-freq": 5
+    },
+    "environment": {
+        "dry": false,
+        "seed": 123,
+        "verbose": true,
+        "device": "cuda"
+    }
+}
+Traceback (most recent call last):
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/scripts/fine_tune.py", line 430, in <module>
+    main(args)
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/scripts/fine_tune.py", line 135, in main
+    raise ValueError(f"checkpoints not found: {checkpoints}")
+ValueError: checkpoints not found: /home/divit/projects/models/dinov2.2CrossAttn.Diff-CMU.pth

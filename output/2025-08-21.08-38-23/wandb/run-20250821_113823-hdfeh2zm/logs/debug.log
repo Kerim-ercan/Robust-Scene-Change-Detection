@@ -1,0 +1,22 @@
+2025-08-21 11:38:23,465 INFO    MainThread:23334 [wandb_setup.py:_flush():80] Current SDK version is 0.21.1
+2025-08-21 11:38:23,465 INFO    MainThread:23334 [wandb_setup.py:_flush():80] Configure stats pid to 23334
+2025-08-21 11:38:23,465 INFO    MainThread:23334 [wandb_setup.py:_flush():80] Loading settings from /home/divit/.config/wandb/settings
+2025-08-21 11:38:23,465 INFO    MainThread:23334 [wandb_setup.py:_flush():80] Loading settings from /home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/wandb/settings
+2025-08-21 11:38:23,465 INFO    MainThread:23334 [wandb_setup.py:_flush():80] Loading settings from environment variables
+2025-08-21 11:38:23,466 INFO    MainThread:23334 [wandb_init.py:setup_run_log_directory():703] Logging user logs to /home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/output/2025-08-21.08-38-23/wandb/run-20250821_113823-hdfeh2zm/logs/debug.log
+2025-08-21 11:38:23,466 INFO    MainThread:23334 [wandb_init.py:setup_run_log_directory():704] Logging internal logs to /home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/output/2025-08-21.08-38-23/wandb/run-20250821_113823-hdfeh2zm/logs/debug-internal.log
+2025-08-21 11:38:23,466 INFO    MainThread:23334 [wandb_init.py:init():830] calling init triggers
+2025-08-21 11:38:23,466 INFO    MainThread:23334 [wandb_init.py:init():835] wandb.init called with sweep_config: {}
+config: {'model': {'checkpoints': '/home/divit/projects/models/dinov2.2CrossAttn.Diff-CMU.pth', 'target-shp-row': 504, 'target-shp-col': 504}, 'optimizer': {'epochs': 20, 'warmup-epoch': 2, 'learn-rate': 2e-05, 'loss-weight': True, 'lr-scheduler': 'cosine', 'grad-scaler': True}, 'dataset': {'batch-size': 4, 'num-workers': 4, 'dataset': 'CUSTOM', 'hflip-prob': 0.5, 'figsize': 224}, 'evaluation': {'trainset': 5}, 'wandb': {'project': 'custom-change-detection', 'name': 'custom-dataset-finetune', 'output-path': '/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/output/2025-08-21.08-38-23', 'save-checkpoint-freq': 5}, 'environment': {'dry': False, 'seed': 123, 'verbose': True, 'device': 'cuda'}, '_wandb': {}}
+2025-08-21 11:38:23,466 INFO    MainThread:23334 [wandb_init.py:init():871] starting backend
+2025-08-21 11:38:23,677 INFO    MainThread:23334 [wandb_init.py:init():874] sending inform_init request
+2025-08-21 11:38:23,680 INFO    MainThread:23334 [wandb_init.py:init():882] backend started and connected
+2025-08-21 11:38:23,681 INFO    MainThread:23334 [wandb_init.py:init():953] updated telemetry
+2025-08-21 11:38:23,685 INFO    MainThread:23334 [wandb_init.py:init():977] communicating run to backend with 90.0 second timeout
+2025-08-21 11:38:24,438 INFO    MainThread:23334 [wandb_init.py:init():1029] starting run threads in backend
+2025-08-21 11:38:24,489 INFO    MainThread:23334 [wandb_run.py:_console_start():2494] atexit reg
+2025-08-21 11:38:24,490 INFO    MainThread:23334 [wandb_run.py:_redirect():2342] redirect: wrap_raw
+2025-08-21 11:38:24,490 INFO    MainThread:23334 [wandb_run.py:_redirect():2411] Wrapping output streams.
+2025-08-21 11:38:24,490 INFO    MainThread:23334 [wandb_run.py:_redirect():2434] Redirects installed.
+2025-08-21 11:38:24,491 INFO    MainThread:23334 [wandb_init.py:init():1075] run started, returning control to user process
+2025-08-21 11:38:24,751 INFO    MsgRouterThr:23334 [mailbox.py:close():129] [no run ID] Closing mailbox, abandoning 1 handles.

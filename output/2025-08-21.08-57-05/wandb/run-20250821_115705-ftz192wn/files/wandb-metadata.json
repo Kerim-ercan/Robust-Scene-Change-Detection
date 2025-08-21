@@ -1,0 +1,42 @@
+{
+  "os": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "CPython 3.10.18",
+  "startedAt": "2025-08-21T08:57:05.688433Z",
+  "args": [
+    "scripts/configs/fine_tune.yml"
+  ],
+  "program": "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/scripts/fine_tune.py",
+  "codePath": "scripts/fine_tune.py",
+  "codePathLocal": "scripts/fine_tune.py",
+  "git": {
+    "remote": "https://github.com/Kerim-ercan/Robust-Scene-Change-Detection.git",
+    "commit": "12c58594f190d7850cbe95a1e0e13e91be3d346b"
+  },
+  "email": "kerim_ercan@outlook.com",
+  "root": "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/output/2025-08-21.08-57-05",
+  "host": "ASUS",
+  "executable": "/home/divit/projects/Robust-Scene/.venv310/bin/python",
+  "cpu_count": 8,
+  "cpu_count_logical": 16,
+  "gpu": "NVIDIA GeForce RTX 3060",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "1081101176832",
+      "used": "27941412864"
+    }
+  },
+  "memory": {
+    "total": "8239898624"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 3060",
+      "memoryTotal": "12884901888",
+      "architecture": "Ampere",
+      "uuid": "GPU-040fa11b-3504-4293-8736-2eb3bf229159"
+    }
+  ],
+  "cudaVersion": "12.6",
+  "writerId": "ocw3imupoql5o8112d3hka41tvpysslw"
+}

@@ -1,0 +1,88 @@
+_wandb:
+    value:
+        cli_version: 0.21.1
+        e:
+            xfxsy1xns8dy6omup7nvcahips507r5e:
+                args:
+                    - scripts/configs/fine_tune.yml
+                codePath: scripts/fine_tune.py
+                codePathLocal: scripts/fine_tune.py
+                cpu_count: 8
+                cpu_count_logical: 16
+                cudaVersion: "12.6"
+                disk:
+                    /:
+                        total: "1081101176832"
+                        used: "28016082944"
+                email: kerim_ercan@outlook.com
+                executable: /home/divit/projects/Robust-Scene/.venv310/bin/python
+                git:
+                    commit: 12c58594f190d7850cbe95a1e0e13e91be3d346b
+                    remote: https://github.com/Kerim-ercan/Robust-Scene-Change-Detection.git
+                gpu: NVIDIA GeForce RTX 3060
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ampere
+                      memoryTotal: "12884901888"
+                      name: NVIDIA GeForce RTX 3060
+                      uuid: GPU-040fa11b-3504-4293-8736-2eb3bf229159
+                host: ASUS
+                memory:
+                    total: "8239898624"
+                os: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39
+                program: /home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/scripts/fine_tune.py
+                python: CPython 3.10.18
+                root: /home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/output/2025-08-21.09-04-25
+                startedAt: "2025-08-21T09:04:26.318941Z"
+                writerId: xfxsy1xns8dy6omup7nvcahips507r5e
+        m: []
+        python_version: 3.10.18
+        t:
+            "1":
+                - 1
+                - 41
+            "2":
+                - 1
+                - 41
+            "3":
+                - 13
+                - 16
+            "4": 3.10.18
+            "5": 0.21.1
+            "12": 0.21.1
+            "13": linux-x86_64
+dataset:
+    value:
+        batch-size: 4
+        dataset: CUSTOM
+        figsize: 224
+        hflip-prob: 0.5
+        num-workers: 4
+environment:
+    value:
+        device: cuda
+        dry: false
+        seed: 123
+        verbose: true
+evaluation:
+    value:
+        trainset: 5
+model:
+    value:
+        checkpoints: /home/divit/projects/models/dinov2.2CrossAttn.Diff-CMU.pth
+        target-shp-col: 504
+        target-shp-row: 504
+optimizer:
+    value:
+        epochs: 20
+        grad-scaler: true
+        learn-rate: 2e-05
+        loss-weight: true
+        lr-scheduler: cosine
+        warmup-epoch: 2
+wandb:
+    value:
+        name: custom-dataset-finetune
+        output-path: /home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/output/2025-08-21.09-04-25
+        project: custom-change-detection
+        save-checkpoint-freq: 5

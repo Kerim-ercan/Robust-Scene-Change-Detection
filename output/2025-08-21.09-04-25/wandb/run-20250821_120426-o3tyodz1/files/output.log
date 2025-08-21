@@ -1,0 +1,103 @@
+{
+    "model": {
+        "checkpoints": "/home/divit/projects/models/dinov2.2CrossAttn.Diff-CMU.pth",
+        "target-shp-row": 504,
+        "target-shp-col": 504
+    },
+    "optimizer": {
+        "epochs": 20,
+        "warmup-epoch": 2,
+        "learn-rate": 2e-05,
+        "loss-weight": true,
+        "lr-scheduler": "cosine",
+        "grad-scaler": true
+    },
+    "dataset": {
+        "batch-size": 4,
+        "num-workers": 4,
+        "dataset": "CUSTOM",
+        "hflip-prob": 0.5,
+        "figsize": 224
+    },
+    "evaluation": {
+        "trainset": 5
+    },
+    "wandb": {
+        "project": "custom-change-detection",
+        "name": "custom-dataset-finetune",
+        "output-path": "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/output/2025-08-21.09-04-25",
+        "save-checkpoint-freq": 5
+    },
+    "environment": {
+        "dry": false,
+        "seed": 123,
+        "verbose": true,
+        "device": "cuda"
+    }
+}
+
+     use the checkpoints from pretrained model:
+
+{
+    "model": {
+        "name": "dino2 + cross_attention",
+        "dino-model": "dinov2_vits14",
+        "layer1": 11,
+        "facet1": "query",
+        "facet2": "query",
+        "num-heads": 1,
+        "dropout-rate": 0.1,
+        "target-shp-row": 504,
+        "target-shp-col": 504,
+        "num-blocks": 1,
+        "freeze-dino": true,
+        "unfreeze-dino-last-n-layer": 0
+    },
+    "optimizer": {
+        "epochs": 100,
+        "warmup-epoch": 10,
+        "learn-rate": 0.0001,
+        "loss-weight": true,
+        "lr-scheduler": "cosine",
+        "grad-scaler": true
+    },
+    "dataset": {
+        "batch-size": 4,
+        "num-workers": 4,
+        "dataset": "VL_CMU_CD",
+        "hflip-prob": 0.5,
+        "diff-augment": true,
+        "figsize": null
+    },
+    "evaluation": {
+        "trainset": 0
+    },
+    "wandb": {
+        "project": "dino-change-detection",
+        "name": "hpc-cross-attention-aug-diff-2",
+        "output-path": "/hpcfs/users/a1904931/Projects/img-cd/output/hpc-cross-attention-aug-diff-2",
+        "save-checkpoint-freq": 0
+    },
+    "environment": {
+        "dry": false,
+        "seed": 123,
+        "verbose": true,
+        "device": "cuda"
+    }
+}
+Using cache found in /home/divit/.cache/torch/hub/facebookresearch_dinov2_main
+A matching Triton is not available, some optimizations will not be enabled.
+Error caught was: No module named 'triton'
+<All keys matched successfully>
+Traceback (most recent call last):
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/scripts/fine_tune.py", line 453, in <module>
+    main(args)
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/scripts/fine_tune.py", line 183, in main
+    trainset = datasets.get_CUSTOM_training_datasets(**opt)
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/src/robust_scene_change_detect/datasets/__init__.py", line 196, in get_CUSTOM_training_datasets
+    trainset_origin = get_dataset("CUSTOM", mode="train")
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/src/robust_scene_change_detect/datasets/__init__.py", line 88, in get_dataset
+    return loader(root=root, **kwargs)
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/src/robust_scene_change_detect/datasets/custom_dataset.py", line 57, in __init__
+    raise ValueError(f"Missing files: {missing_files}")
+ValueError: Missing files: ['mask/image1.png', 'mask/image100.png', 'mask/image101.png', 'mask/image102.png', 'mask/image103.png', 'mask/image104.png', 'mask/image105.png', 'mask/image106.png', 'mask/image107.png', 'mask/image108.png', 'mask/image109.png', 'mask/image110.png', 'mask/image111.png', 'mask/image112.png', 'mask/image113.png', 'mask/image114.png', 'mask/image115.png', 'mask/image116.png', 'mask/image117.png', 'mask/image118.png', 'mask/image119.png', 'mask/image120.png', 'mask/image121.png', 'mask/image122.png', 'mask/image123.png', 'mask/image124.png', 'mask/image125.png', 'mask/image126.png', 'mask/image127.png', 'mask/image128.png', 'mask/image129.png', 'mask/image130.png', 'mask/image131.png', 'mask/image132.png', 'mask/image133.png', 'mask/image134.png', 'mask/image135.png', 'mask/image136.png', 'mask/image14.png', 'mask/image15.png', 'mask/image17.png', 'mask/image18.png', 'mask/image19.png', 'mask/image2.png', 'mask/image20.png', 'mask/image21.png', 'mask/image22.png', 'mask/image23.png', 'mask/image24.png', 'mask/image25.png', 'mask/image26.png', 'mask/image27.png', 'mask/image28.png', 'mask/image29.png', 'mask/image3.png', 'mask/image30.png', 'mask/image31.png', 'mask/image32.png', 'mask/image33.png', 'mask/image34.png', 'mask/image35.png', 'mask/image36.png', 'mask/image37.png', 'mask/image38.png', 'mask/image39.png', 'mask/image4.png', 'mask/image40.png', 'mask/image41.png', 'mask/image42.png', 'mask/image43.png', 'mask/image44.png', 'mask/image45.png', 'mask/image46.png', 'mask/image47.png', 'mask/image48.png', 'mask/image49.png', 'mask/image5.png', 'mask/image50.png', 'mask/image51.png', 'mask/image52.png', 'mask/image53.png', 'mask/image54.png', 'mask/image55.png', 'mask/image56.png', 'mask/image57.png', 'mask/image58.png', 'mask/image59.png', 'mask/image6.png', 'mask/image60.png', 'mask/image61.png', 'mask/image62.png', 'mask/image63.png', 'mask/image64.png', 'mask/image65.png', 'mask/image66.png', 'mask/image67.png', 'mask/image68.png', 'mask/image69.png', 'mask/image7.png', 'mask/image70.png', 'mask/image71.png', 'mask/image72.png', 'mask/image73.png', 'mask/image74.png', 'mask/image75.png', 'mask/image76.png', 'mask/image77.png', 'mask/image78.png', 'mask/image79.png', 'mask/image8.png', 'mask/image80.png', 'mask/image81.png', 'mask/image82.png', 'mask/image83.png', 'mask/image84.png', 'mask/image85.png', 'mask/image86.png', 'mask/image87.png', 'mask/image88.png', 'mask/image89.png', 'mask/image90.png', 'mask/image91.png', 'mask/image92.png', 'mask/image93.png', 'mask/image94.png', 'mask/image95.png', 'mask/image96.png', 'mask/image97.png', 'mask/image98.png', 'mask/image99.png']

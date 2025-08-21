@@ -164,7 +164,6 @@ def main(args):
     opt = args["dataset"]
 
     if opt["dataset"] == "PSCD":
-
         trainset = datasets.get_PSCD_training_datasets(**opt)
 
         pscd_opts = {
@@ -179,8 +178,32 @@ def main(args):
         valset_1 = wrapper(valset_1)
         testset_1 = wrapper(testset_1)
 
+    elif opt["dataset"] == "CUSTOM":
+        # Handle your custom dataset
+        trainset = datasets.get_CUSTOM_training_datasets(**opt)
+
+        # For validation and test, you can either:
+        # Option 1: Use your test set for both validation and testing
+        testset_raw = datasets.get_dataset("CUSTOM", mode="test")
+        
+        # Split test set into validation and test (optional)
+        # You can modify this split ratio as needed
+        test_size = len(testset_raw)
+        val_size = test_size // 2  # Use half for validation, half for testing
+        
+        indices = list(range(test_size))
+        val_indices = indices[:val_size]
+        test_indices = indices[val_size:]
+        
+        valset_raw = testset_raw.loc(val_indices)
+        testset_raw = testset_raw.loc(test_indices)
+        
+        wrapper = datasets.wrap_eval_dataset(opt, shuffle=False)
+        valset_1 = wrapper(valset_raw)
+        testset_1 = wrapper(testset_raw)
+
     else:
-        raise NotImplementedError
+        raise NotImplementedError(f"Dataset {opt['dataset']} not implemented")
     #########################################
 
     utils_torch.seed_everything(_seed)
@@ -425,6 +448,9 @@ if __name__ == "__main__":
         os.environ["WANDB_MODE"] = "offline"
 
     wandb.login()
+    wandb.init(**logs)
+
+    main(args)
     wandb.init(**logs)
 
     main(args)

@@ -1,2 +1,3 @@
-VL_CMU_CD <directory to VL_CMU_CD>
-PSCD <directory to PSCD>
+VL_CMU_CD /path/to/VL_CMU_CD
+PSCD /path/to/PSCD
+CUSTOM /home/divit/projects/dataset

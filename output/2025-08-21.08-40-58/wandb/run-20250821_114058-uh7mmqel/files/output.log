@@ -1,0 +1,97 @@
+{
+    "model": {
+        "checkpoints": "/home/divit/projects/models/dinov2.2CrossAttn.Diff-CMU.pth",
+        "target-shp-row": 504,
+        "target-shp-col": 504
+    },
+    "optimizer": {
+        "epochs": 20,
+        "warmup-epoch": 2,
+        "learn-rate": 2e-05,
+        "loss-weight": true,
+        "lr-scheduler": "cosine",
+        "grad-scaler": true
+    },
+    "dataset": {
+        "batch-size": 4,
+        "num-workers": 4,
+        "dataset": "CUSTOM",
+        "hflip-prob": 0.5,
+        "figsize": 224
+    },
+    "evaluation": {
+        "trainset": 5
+    },
+    "wandb": {
+        "project": "custom-change-detection",
+        "name": "custom-dataset-finetune",
+        "output-path": "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/output/2025-08-21.08-40-58",
+        "save-checkpoint-freq": 5
+    },
+    "environment": {
+        "dry": false,
+        "seed": 123,
+        "verbose": true,
+        "device": "cuda"
+    }
+}
+
+     use the checkpoints from pretrained model:
+
+{
+    "model": {
+        "name": "dino2 + cross_attention",
+        "dino-model": "dinov2_vits14",
+        "layer1": 11,
+        "facet1": "query",
+        "facet2": "query",
+        "num-heads": 1,
+        "dropout-rate": 0.1,
+        "target-shp-row": 504,
+        "target-shp-col": 504,
+        "num-blocks": 1,
+        "freeze-dino": true,
+        "unfreeze-dino-last-n-layer": 0
+    },
+    "optimizer": {
+        "epochs": 100,
+        "warmup-epoch": 10,
+        "learn-rate": 0.0001,
+        "loss-weight": true,
+        "lr-scheduler": "cosine",
+        "grad-scaler": true
+    },
+    "dataset": {
+        "batch-size": 4,
+        "num-workers": 4,
+        "dataset": "VL_CMU_CD",
+        "hflip-prob": 0.5,
+        "diff-augment": true,
+        "figsize": null
+    },
+    "evaluation": {
+        "trainset": 0
+    },
+    "wandb": {
+        "project": "dino-change-detection",
+        "name": "hpc-cross-attention-aug-diff-2",
+        "output-path": "/hpcfs/users/a1904931/Projects/img-cd/output/hpc-cross-attention-aug-diff-2",
+        "save-checkpoint-freq": 0
+    },
+    "environment": {
+        "dry": false,
+        "seed": 123,
+        "verbose": true,
+        "device": "cuda"
+    }
+}
+Using cache found in /home/divit/.cache/torch/hub/facebookresearch_dinov2_main
+A matching Triton is not available, some optimizations will not be enabled.
+Error caught was: No module named 'triton'
+<All keys matched successfully>
+Traceback (most recent call last):
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/scripts/fine_tune.py", line 430, in <module>
+    main(args)
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/scripts/fine_tune.py", line 183, in main
+    raise NotImplementedError
+NotImplementedError

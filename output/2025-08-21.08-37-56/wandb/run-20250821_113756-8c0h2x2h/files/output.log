@@ -1,0 +1,42 @@
+{
+    "model": {
+        "checkpoints": "",
+        "target-shp-row": 224,
+        "target-shp-col": 224
+    },
+    "optimizer": {
+        "epochs": 10,
+        "warmup-epoch": 0,
+        "learn-rate": 4e-05,
+        "loss-weight": true,
+        "lr-scheduler": "none",
+        "grad-scaler": true
+    },
+    "dataset": {
+        "batch-size": 4,
+        "num-workers": 4,
+        "dataset": "PSCD",
+        "hflip-prob": 0.5
+    },
+    "evaluation": {
+        "trainset": 0
+    },
+    "wandb": {
+        "project": "",
+        "name": "",
+        "output-path": "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/output/2025-08-21.08-37-56",
+        "save-checkpoint-freq": 0
+    },
+    "environment": {
+        "dry": false,
+        "seed": 123,
+        "verbose": true,
+        "device": "cuda"
+    }
+}
+Traceback (most recent call last):
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/scripts/fine_tune.py", line 430, in <module>
+    main(args)
+  File "/home/divit/projects/Robust-Scene/Robust-Scene-Change-Detection/scripts/fine_tune.py", line 135, in main
+    raise ValueError(f"checkpoints not found: {checkpoints}")
+ValueError: checkpoints not found:

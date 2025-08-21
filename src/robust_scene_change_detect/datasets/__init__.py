@@ -7,6 +7,7 @@ import torchvision.transforms as tvf
 # local dataset
 from .pscd import PSCD, CroppedPSCD, DiffViewPSCD
 from .vl_cmu_cd import VL_CMU_CD, Diff_VL_CMU_CD
+from .custom_dataset import CustomChangeDetectionDataset  # Add this import
 
 # local modules
 import robust_scene_change_detect.torch_utils as torch_utils
@@ -22,6 +23,7 @@ _data_factory = {
     "PSCD": CroppedPSCD,
     "PSCD_Diff_View": DiffViewPSCD,
     "PSCD_Full": PSCD,
+    "CUSTOM": CustomChangeDetectionDataset,  # Add your custom dataset
 }
 
 # dataset name: directory path
@@ -72,6 +74,7 @@ def get_dataset(name, root=None, **kwargs):
         "PSCD": "PSCD",
         "PSCD_Diff_View": "PSCD",
         "PSCD_Full": "PSCD",
+        "CUSTOM": "CUSTOM",  # Add mapping for your custom dataset
     }
 
     loader = get_dataset_loader(name)
@@ -175,6 +178,44 @@ def wrap_eval_dataset(opts, shuffle=True, figsize=None):
         return dataset
 
     return wrapper
+
+
+# Add function for your custom dataset training
+def get_CUSTOM_training_datasets(**opts):
+    """
+    Create training dataset loader for custom dataset
+    """
+    batch_size = opts["batch-size"]
+    num_workers = opts["num-workers"]
+    hflip_prob = opts["hflip-prob"]
+    figsize = opts.get("figsize", None)
+
+    wrapper = torch_utils.CDDataWrapper
+
+    # Get your custom training dataset
+    trainset_origin = get_dataset("CUSTOM", mode="train")
+
+    transform, target_transform = prepare_transform_wo_normalization(
+        trainset_origin, figsize=figsize
+    )
+
+    train_opts = {
+        "transform": transform,
+        "target_transform": target_transform,
+        "return_ind": True,
+        "hflip_prob": hflip_prob,
+    }
+
+    training_sets = wrapper(trainset_origin, **train_opts)
+
+    training_sets = torch.utils.data.DataLoader(
+        training_sets,
+        batch_size=batch_size,
+        num_workers=num_workers,
+        shuffle=True,
+    )
+
+    return training_sets
 
 
 def get_CMU_training_datasets_aug_diff(**opts):
