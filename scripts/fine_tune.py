@@ -305,18 +305,33 @@ def main(args):
 
         # evaluation on trainset
         if freq_train > 0 and (epoch + 1) % freq_train == 0:
-            statics, time = torch_utils.image_change_detection_evaluation(
-                model,
-                trainset,
-                verbose=_verbose,
-                prefix="Trainset: ",
-                return_duration=True,
-                dry_run=_dry,
-                device=_device,
-            )
-
-            logs["evaluation.train"] = statics
-            logs["time.eval.train"] = time
+            # Create evaluation version of trainset without indices wrapper
+            dataset_opt = args["dataset"]  # Use the correct dataset options
+            if dataset_opt["dataset"] == "PSCD":
+                trainset_eval = datasets.get_dataset("PSCD", mode="train", 
+                                                   use_mask_t0=True, use_mask_t1=False)
+                wrapper = datasets.wrap_eval_dataset(dataset_opt, shuffle=False)
+                trainset_eval = wrapper(trainset_eval)
+            elif dataset_opt["dataset"] == "CUSTOM":
+                trainset_eval = datasets.get_dataset("CUSTOM", mode="train")
+                wrapper = datasets.wrap_eval_dataset(dataset_opt, shuffle=False)
+                trainset_eval = wrapper(trainset_eval)
+            else:
+                # Skip trainset evaluation for unsupported datasets
+                trainset_eval = None
+            
+            if trainset_eval is not None:
+                statics, time = torch_utils.image_change_detection_evaluation(
+                    model,
+                    trainset_eval,
+                    verbose=_verbose,
+                    prefix="Trainset: ",
+                    return_duration=True,
+                    dry_run=_dry,
+                    device=_device,
+                )
+                logs["evaluation.train"] = statics
+                logs["time.eval.train"] = time
 
         # evaluation on testset
         statics, time = torch_utils.image_change_detection_evaluation(
