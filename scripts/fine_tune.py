@@ -9,6 +9,7 @@ import pickle
 import torch
 import torch.multiprocessing
 import torch.nn as nn
+import torch.nn.functional as F
 import wandb
 import yaml
 
@@ -84,6 +85,17 @@ def train_one_epoch(
 
         if idx == 0:
             xxprint("output: ", outputs.shape, "->", transform_outputs.shape)
+
+        # Resize targets to match model output size
+        target_size = transform_outputs.shape[2:]  # Get spatial dimensions (504, 504)
+        if targets.shape[1:] != target_size:
+            targets = F.interpolate(
+                targets.unsqueeze(1).float(), 
+                size=target_size, 
+                mode='nearest'
+            ).squeeze(1)
+            if idx == 0:
+                xxprint("targets resized to:", targets.shape)
 
         # not sure why it need to specify long format
         targets = targets.to(torch.long)
