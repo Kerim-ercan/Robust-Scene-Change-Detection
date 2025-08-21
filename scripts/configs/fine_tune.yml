@@ -7,9 +7,9 @@
 ###################
 
 model:
-    checkpoints: "/home/divit/projects/models/dinov2.2CrossAttn.Diff-CMU.pth"  # Update this path
-    target-shp-row: 504
-    target-shp-col: 504      # Adjust based on your image size
+    checkpoints: "/home/divit/projects/models/dinov2.2CrossAttn.PSCD.pth"           # path to the pre-trained model
+    target-shp-row: 224
+    target-shp-col: 224          # 224 for PSCD
 
 #############
 # optimizer #
@@ -17,12 +17,12 @@ model:
 
 # ---------
 optimizer:
-    epochs: 20                   # You might want to increase epochs for custom dataset
-    warmup-epoch: 2
-    learn-rate: 0.00002         # Slightly lower learning rate for fine-tuning
+    epochs: 10
+    warmup-epoch: 0
+    learn-rate: 0.00004
     loss-weight: True
-    lr-scheduler: "cosine"       # Use cosine scheduler for better convergence
-    grad-scaler: True            # enable mixed precision
+    lr-scheduler: "none"    # {cosine, linear, exp, none}
+    grad-scaler: True       # enable mixed precision
 
 ###########
 # dataset #
@@ -30,11 +30,10 @@ optimizer:
 
 # -------
 dataset:
-    batch-size: 4                # Adjust based on your GPU memory
+    batch-size: 4
     num-workers: 4
-    dataset: "CUSTOM"            # Use your custom dataset
+    dataset: "CUSTOM"         # PSCD
     hflip-prob: 0.5
-    figsize: 224                 # Optional: specify if different from default
 
 ##############
 # evaluation #
@@ -43,7 +42,7 @@ dataset:
 # ----------
 evaluation:
     # name: epoch frequency
-    trainset: 5                  # Evaluate on train set every 5 epochs
+    trainset: 0
 
 #########
 # wandb #
@@ -51,10 +50,10 @@ evaluation:
 
 # ------
 wandb:
-    project: "custom-change-detection"  # Your project name
-    name: "custom-dataset-finetune"     # Experiment name
-    output-path: ""                     # Will be auto-generated if empty
-    save-checkpoint-freq: 5             # Save checkpoint every 5 epochs
+    project: ""
+    name: ""
+    output-path: ""
+    save-checkpoint-freq: 0  # frequency
 
 ########################
 # develope and testing #
@@ -62,7 +61,7 @@ wandb:
 
 # --------------------
 environment:
-    dry: False                   # Set to True for quick testing
+    dry: False
     seed: 123
     verbose: True
     device: "cuda"
