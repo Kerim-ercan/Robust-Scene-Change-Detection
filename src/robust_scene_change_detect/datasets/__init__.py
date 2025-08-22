@@ -7,7 +7,7 @@ import torchvision.transforms as tvf
 # local dataset
 from .pscd import PSCD, CroppedPSCD, DiffViewPSCD
 from .vl_cmu_cd import VL_CMU_CD, Diff_VL_CMU_CD
-
+from .your_custom_dataset import YourCustomDataset
 # local modules
 import robust_scene_change_detect.torch_utils as torch_utils
 
@@ -22,7 +22,9 @@ _data_factory = {
     "PSCD": CroppedPSCD,
     "PSCD_Diff_View": DiffViewPSCD,
     "PSCD_Full": PSCD,
+    "YOUR_CUSTOM": YourCustomDataset,  # Add this line
 }
+
 
 # dataset name: directory path
 _path_factory = {}
@@ -67,12 +69,13 @@ def get_dataset_loader(name):
 def get_dataset(name, root=None, **kwargs):
 
     _remap = {
-        "VL_CMU_CD": "VL_CMU_CD",
-        "VL_CMU_CD_Diff_View": "VL_CMU_CD",
-        "PSCD": "PSCD",
-        "PSCD_Diff_View": "PSCD",
-        "PSCD_Full": "PSCD",
-    }
+    "VL_CMU_CD": "VL_CMU_CD",
+    "VL_CMU_CD_Diff_View": "VL_CMU_CD",
+    "PSCD": "PSCD",
+    "PSCD_Diff_View": "PSCD",
+    "PSCD_Full": "PSCD",
+    "YOUR_CUSTOM": "YOUR_CUSTOM",  # Add this line
+}
 
     loader = get_dataset_loader(name)
 
@@ -298,4 +301,38 @@ def get_PSCD_training_datasets(**opts):
         shuffle=True,
     )
 
+    return training_sets
+
+#### MY CUSTOM LOAD
+
+def get_YOUR_CUSTOM_training_datasets(**opts):
+    
+    batch_size = opts["batch-size"]
+    num_workers = opts["num-workers"]
+    hflip_prob = opts["hflip-prob"]
+    
+    wrapper = torch_utils.CDDataWrapper
+    
+    # Create training dataset
+    trainset_origin = get_dataset("YOUR_CUSTOM", mode="train")
+    
+    # Prepare transforms without normalization (like PSCD)
+    transform, target_transform = prepare_transform_wo_normalization(trainset_origin)
+    
+    train_opts = {
+        "transform": transform,
+        "target_transform": target_transform,
+        "return_ind": True,
+        "hflip_prob": hflip_prob,
+    }
+    
+    training_sets = wrapper(trainset_origin, **train_opts)
+    
+    training_sets = torch.utils.data.DataLoader(
+        training_sets,
+        batch_size=batch_size,
+        num_workers=num_workers,
+        shuffle=True,
+    )
+    
     return training_sets
