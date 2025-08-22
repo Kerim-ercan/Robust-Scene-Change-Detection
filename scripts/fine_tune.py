@@ -12,6 +12,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import wandb
 import yaml
+from torch.utils.data import Subset
 
 torch.multiprocessing.set_sharing_strategy("file_system")
 
@@ -310,13 +311,13 @@ def main(args):
         valset_1 = wrapper(valset_1)
         testset_1 = wrapper(testset_1)
 
-    elif opt["dataset"] == "CUSTOM":
+    elif opt["dataset"] == "YOUR_CUSTOM":
         # Handle your custom dataset
-        trainset = datasets.get_CUSTOM_training_datasets(**opt)
+        trainset = datasets.get_YOUR_CUSTOM_training_datasets(**opt)
 
         # For validation and test, you can either:
         # Option 1: Use your test set for both validation and testing
-        testset_raw = datasets.get_dataset("CUSTOM", mode="test")
+        testset_raw = datasets.get_dataset("YOUR_CUSTOM", mode="test")
         
         # Split test set into validation and test (optional)
         # You can modify this split ratio as needed
@@ -326,13 +327,28 @@ def main(args):
         indices = list(range(test_size))
         val_indices = indices[:val_size]
         test_indices = indices[val_size:]
+
+        #ÖNCE WRAP EDİLMELİ ÇÜNKÜ  FİGSİZE ÖZNİTELİĞİ KAYBEDİLİYOR SIRA DEĞİŞİNCE
+        valset_raw = Subset(testset_raw, val_indices)
+        testset_subset = Subset(testset_raw, test_indices)
+        #SUBSET OLAMLI ÇÜNKÜ .LOC PANDA DA KULLANILIYOR TORCH İÇİN SUBSET KULLANILDI
+        #valset_raw = Subset(testset_raw, val_indices)
+        #testset_raw = Subset(testset_raw, test_indices)
         
-        valset_raw = testset_raw.loc(val_indices)
-        testset_raw = testset_raw.loc(test_indices)
+       
+        if hasattr(testset_raw, 'figsize'):
+            valset_raw.figsize = testset_raw.figsize
+            testset_subset.figsize = testset_raw.figsize
+        
+        # Copy any other necessary attributes from original dataset
+        for attr in ['figsize', 'transform', 'target_transform']:
+            if hasattr(testset_raw, attr):
+                setattr(valset_raw, attr, getattr(testset_raw, attr))
+                setattr(testset_subset, attr, getattr(testset_raw, attr))
         
         wrapper = datasets.wrap_eval_dataset(opt, shuffle=False)
         valset_1 = wrapper(valset_raw)
-        testset_1 = wrapper(testset_raw)
+        testset_1 = wrapper(testset_subset)
 
     else:
         raise NotImplementedError(f"Dataset {opt['dataset']} not implemented")

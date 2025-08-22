@@ -17,7 +17,7 @@ model:
 
 # ---------
 optimizer:
-    epochs: 10
+    epochs: 25
     warmup-epoch: 0
     learn-rate: 0.00004
     loss-weight: True
